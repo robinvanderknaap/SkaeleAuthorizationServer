@@ -1,0 +1,23 @@
+<div class="about">
+	<div class="row">
+		<div class="col-md-12">
+			<img class="img-responsive logo" src="/images/skaele.png"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="media" ng-repeat="teamMember in teamMembers">
+				<div class="media-left">
+					<a href="{{teamMember.html_url}}">
+					<img class="media-object img-circle" ng-src="{{teamMember.avatar_url}} + &s=100">
+					</a>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">{{teamMember.name}}</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+</div>

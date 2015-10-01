@@ -1,0 +1,8 @@
+{
+  "name": "courta",
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-ui-router": "~0.2.15",
+    "bootstrap-sass": "~3.3.5"
+  }
+}

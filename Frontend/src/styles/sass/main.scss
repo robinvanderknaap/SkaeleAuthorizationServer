@@ -1,0 +1,13 @@
+@import "bootstrap-variables"; // http://treyhunner.com/2015/02/creating-a-custom-bootstrap-build/
+// bower:scss
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+// Custom sass/css goes here 
+
+.about{
+	.logo{
+		width: 50%;
+		margin-bottom: 50px;
+	}
+}
