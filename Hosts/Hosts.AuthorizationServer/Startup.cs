@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Dependencies;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;
-using IdentityServer3.Core.Services;
 using IdentityServer3.Core.Services.InMemory;
 using Infrastructure.ClientProvider;
 using Infrastructure.DependencyResolution;
 using Microsoft.Owin.Cors;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 using Owin;
 using StructureMap;
 using Web.AuthorizationServer;
-using IDependencyResolver = System.Web.Http.Dependencies.IDependencyResolver;
 
 namespace Hosts.AuthorizationServer
 {
@@ -22,17 +23,26 @@ namespace Hosts.AuthorizationServer
             // Create container
             var container = SetupContainer();
 
+            SetupLogger();
+            
+
             var clients = container.GetInstance<IClientProvider>().GetClients();
 
             app.UseIdentityServer(new IdentityServerOptions
             {
                 SiteName = "Skaele Authorization Server",
                 Factory = new IdentityServerServiceFactory()
-                    .UseInMemoryUsers(new List<InMemoryUser>
-                    {
-                        
-                    })
+                    .UseInMemoryUsers(new List<InMemoryUser>())
                     .UseInMemoryClients(new List<Client>{
+                        new Client
+                        {
+                            ClientName = "ConsoleClient",
+                            ClientId = "ConsoleClient",
+                            Flow = Flows.AuthorizationCode,
+                            AllowAccessToAllScopes = true, // !!WARNING!!!
+                            ClientSecrets = new List<Secret> { new Secret("secret".Sha256()) }
+                            //RedirectUris
+                        }
     
                     })
                     .UseInMemoryScopes(StandardScopes.All)
@@ -60,6 +70,23 @@ namespace Hosts.AuthorizationServer
                 config.AddRegistry<ConfigurationRegistry>();
                 config.AddRegistry<IdentityServerRegistry>();
             });
+        }
+
+        private static void SetupLogger()
+        {
+            // IdentityServer uses LibLog, this means NLog is automatically detected.
+            // We just need to setup NLog and it will receive logmessages from IdentityServer
+
+            var loggingConfiguration = new LoggingConfiguration();
+
+            // Setup debugger target which logs to debugger, log statements will be visible in output window of Visual Studio
+            var debuggerTarget = new DebuggerTarget();
+            loggingConfiguration.AddTarget("DebuggerTarget", debuggerTarget);
+            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, debuggerTarget));
+
+            LogManager.Configuration = loggingConfiguration;
+
+            LogManager.ThrowExceptions = true;
         }
     }
 
