@@ -33,6 +33,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{6370
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "Clients\ConsoleClient\ConsoleClient.csproj", "{3426D0DB-AD23-41E3-B98F-D4125A119CAF}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AngularClient", "Clients\AngularClient\src\", "{FB336C55-C011-4F5E-9620-52832854E364}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54746"
+		Debug.AspNetCompiler.PhysicalPath = "Clients\AngularClient\src\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54746\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54746"
+		Release.AspNetCompiler.PhysicalPath = "Clients\AngularClient\src\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54746\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "54746"
+		SlnRelativePath = "Clients\AngularClient\src\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +104,10 @@ Global
 		{3426D0DB-AD23-41E3-B98F-D4125A119CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3426D0DB-AD23-41E3-B98F-D4125A119CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3426D0DB-AD23-41E3-B98F-D4125A119CAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB336C55-C011-4F5E-9620-52832854E364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB336C55-C011-4F5E-9620-52832854E364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB336C55-C011-4F5E-9620-52832854E364}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB336C55-C011-4F5E-9620-52832854E364}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,5 +124,6 @@ Global
 		{59779B7A-5E41-4C9C-829E-FDE888028CB6} = {28AE6974-134E-43F2-8291-69D442529E19}
 		{233BD950-44B1-4DC3-9ACF-3F7F44E04E8C} = {28AE6974-134E-43F2-8291-69D442529E19}
 		{3426D0DB-AD23-41E3-B98F-D4125A119CAF} = {6370A0BC-441B-4CD2-BBB4-61B79D28E1FD}
+		{FB336C55-C011-4F5E-9620-52832854E364} = {6370A0BC-441B-4CD2-BBB4-61B79D28E1FD}
 	EndGlobalSection
 EndGlobal

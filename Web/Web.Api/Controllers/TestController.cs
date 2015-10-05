@@ -4,7 +4,7 @@ using System.Web.Http;
 
 namespace Web.Api.Controllers
 {
-    [RoutePrefix("Test")]
+    [RoutePrefix("")]
     public class TestController : ApiController
     {
         [HttpGet, Route("")]
