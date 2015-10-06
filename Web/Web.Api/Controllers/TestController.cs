@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
-
+﻿using System.Web.Http;
 
 namespace Web.Api.Controllers
 {
@@ -11,6 +9,12 @@ namespace Web.Api.Controllers
         public IHttpActionResult Test()
         {
             return Ok("API is okidoki");
+        }
+
+        [Authorize, HttpGet, Route("access")]
+        public IHttpActionResult Access()
+        {
+            return Ok("You've got access");
         }
     }
 }

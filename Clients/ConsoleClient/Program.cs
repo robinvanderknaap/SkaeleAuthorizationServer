@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 
 namespace ConsoleClient
 {
+    /// <summary>
+    /// Demonstration of 'client credentials flow'.
+    /// This flow is used with machine to machine communication. Not on behalf of a user.
+    /// </summary>
     class Program
     {
         static void Main()
@@ -14,38 +17,30 @@ namespace ConsoleClient
 
             token.Wait();
 
+            var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("http://localhost:50929/")
+            };
+
+            httpClient.SetBearerToken(token.Result);
+
+            var resultFromApi = httpClient.GetStringAsync("access");
+
+            resultFromApi.Wait();
+
+            Console.WriteLine(resultFromApi.Result);
+
             Console.WriteLine(token.Result);
             Console.ReadKey();
         }
 
         private async static Task<string> RequestToken()
         {
-            var clientId = "ConsoleClient";
-            var clientSecret = "secret";
+            var tokenClient = new TokenClient("https://localhost:44302/connect/token", "ConsoleClient", "secret");
 
-            var encoding = Encoding.UTF8;
-            var credentials = $"{clientId}:{clientSecret}";
+            var response = await tokenClient.RequestClientCredentialsAsync("Api");
 
-            var headerValue = Convert.ToBase64String(encoding.GetBytes(credentials));
-
-            var httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("https://localhost:44302/connect/"),
-            };
-
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", headerValue);
-
-
-            var request = new HttpRequestMessage(HttpMethod.Post, "token");
-            //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", headerValue);
-            
-
-            var response = await httpClient.SendAsync(request);
-
-            return await response.Content.ReadAsStringAsync();
-
-
-
+            return response.AccessToken;
         }
     }
 }

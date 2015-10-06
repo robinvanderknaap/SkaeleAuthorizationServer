@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Dependencies;
+using IdentityServer3.AccessTokenValidation;
 using Infrastructure.DependencyResolution;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -13,8 +14,18 @@ namespace Hosts.Api
     {
         public void Configuration(IAppBuilder app)
         {
+
             // Create container
             var container = SetupContainer();
+
+            // Setup token based authentication
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
+            {
+                Authority = "https://localhost:44302",
+                ValidationMode = ValidationMode.ValidationEndpoint,
+
+                RequiredScopes = new[] { "Api" }
+            });
 
             // Configure CORS (Cross Origin Resource Sharing)
             app.UseCors(CorsOptions.AllowAll);

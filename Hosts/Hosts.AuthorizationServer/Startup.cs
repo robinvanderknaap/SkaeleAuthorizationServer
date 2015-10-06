@@ -20,10 +20,11 @@ namespace Hosts.AuthorizationServer
     {
         public void Configuration(IAppBuilder app)
         {
-            // Create container
+            SetupLogger();
+
             var container = SetupContainer();
 
-            SetupLogger();
+            
             
 
             var clients = container.GetInstance<IClientProvider>().GetClients();
@@ -38,14 +39,15 @@ namespace Hosts.AuthorizationServer
                         {
                             ClientName = "ConsoleClient",
                             ClientId = "ConsoleClient",
-                            Flow = Flows.AuthorizationCode,
-                            AllowAccessToAllScopes = true, // !!WARNING!!!
+                            AccessTokenType = AccessTokenType.Reference,
+                            Flow = Flows.ClientCredentials, // No resource owner /user: machine->machine communication
+                            AllowedScopes = new List<string> { "Api" }, // 'Scope' is the api (resource server) that we are protecting
                             ClientSecrets = new List<Secret> { new Secret("secret".Sha256()) }
                             //RedirectUris
                         }
     
                     })
-                    .UseInMemoryScopes(StandardScopes.All)
+                    .UseInMemoryScopes(new List<Scope> { new Scope { Name = "Api" } })
                     
             });
 
