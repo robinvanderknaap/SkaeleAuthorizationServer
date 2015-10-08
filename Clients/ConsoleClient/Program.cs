@@ -30,7 +30,6 @@ namespace ConsoleClient
 
             Console.WriteLine(resultFromApi.Result);
 
-            Console.WriteLine(token.Result);
             Console.ReadKey();
         }
 
