@@ -16,7 +16,47 @@
 						templateUrl: "modules/shared/header/header.html"
 					},
 				}
-			})
+		  	})
+            .state('root.authentication', {
+                abstract: true,
+                url: "/authentication",
+                views: {
+                    'header@': {
+                        templateUrl: "",
+                        controller: ""
+                    }
+                }
+            })
+
+				.state('root.authentication.login', {
+				    url: "/login",
+				    views: {
+				        "main@": {
+				            templateUrl: "modules/authentication/login.html",
+				            controller: "loginController"
+				        }
+				    }
+				})
+
+				.state('root.authentication.logout', {
+				    url: "/logout",
+				    views: {
+				        "main@": {
+				            templateUrl: "modules/authentication/logout.html",
+				            controller: "logoutController"
+				        }
+				    }
+				})
+
+				.state('root.authentication.forgot-password', {
+				    url: "/wachtwoord-vergeten",
+				    views: {
+				        "main@": {
+				            templateUrl: "modules/authentication/forgotpassword.html",
+				            controller: "forgotpasswordController"
+				        }
+				    }
+				})
 		    .state('root.home', {
 		      	url: "/",
 			  	views:{

@@ -22,11 +22,14 @@ var rev = require('gulp-rev');
 var ngAnnotate = require('gulp-ng-annotate');
 var environmentSettings = require('./src/environment-settings');
 
-
-
+// Setup fonts
+gulp.task('copy-fonts', function(){
+  return gulp.src(['./src/bower_components/bootstrap-sass/assets/fonts/bootstrap/**/*.*','./src/bower_components/fontawesome/fonts/**/*.*'])
+    .pipe(gulp.dest('./src/fonts'));
+});
 
 // Wireup bower dependencies
-gulp.task('wireup-bower', function () {
+gulp.task('wireup-bower',['copy-fonts'], function () {
   
   return gulp.src(['./src/index.html', './src/styles/sass/main.scss'], {base:'./src'}) // Base property: http://stackoverflow.com/a/24412960/426840
     .pipe(wiredep())

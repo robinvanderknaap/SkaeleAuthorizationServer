@@ -1,6 +1,7 @@
 @import "bootstrap-variables"; // http://treyhunner.com/2015/02/creating-a-custom-bootstrap-build/
 // bower:scss
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "../../bower_components/fontawesome/scss/font-awesome.scss";
 // endbower
 
 // Custom sass/css goes here 
@@ -10,4 +11,54 @@
 		width: 50%;
 		margin-bottom: 50px;
 	}
+}
+
+.form-signin {
+  
+    max-width: 600px;
+    padding: 19px 29px 29px;
+    margin: 100px auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    
+    
+    .form-signin-heading,
+    .checkbox {
+        margin-bottom: 10px;
+    }
+    
+    .form-signin-heading {
+        img{
+            width:30px;
+        }
+    }
+    
+    .identity-providers{
+        text-align: right;
+        i{
+            color:#8CCA62;
+            margin-left:10px;
+        }
+    }
+    
+    
+    
+    input[type="text"],
+    input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+    }
+    
+    .table-login thead > tr > th,
+    .table-login tbody > tr > th,
+    .table-login tfoot > tr > th,
+    .table-login thead > tr > td,
+    .table-login tbody > tr > td,
+    .table-login tfoot > tr > td {
+        padding: 5px;
+        border: 0px;
+    }
 }
