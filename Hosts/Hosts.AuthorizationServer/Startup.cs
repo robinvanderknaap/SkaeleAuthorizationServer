@@ -1,21 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
-using System.Web.Http;
-using System.Web.Http.Dependencies;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services.InMemory;
-using Infrastructure.ClientProvider;
-using Infrastructure.DependencyResolution;
-using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.Facebook;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
 using Owin;
-using StructureMap;
-using Web.AuthorizationServer;
 
 namespace Hosts.AuthorizationServer
 {
@@ -24,11 +18,6 @@ namespace Hosts.AuthorizationServer
         public void Configuration(IAppBuilder app)
         {
             SetupLogger();
-
-            var container = SetupContainer();
-            
-
-            var clients = container.GetInstance<IClientProvider>().GetClients();
 
             app.UseIdentityServer(new IdentityServerOptions
             {
@@ -41,7 +30,12 @@ namespace Hosts.AuthorizationServer
                             Username = "robin@skaele.nl",
                             Password = "secret",
                             Subject = "robink",
-                            Enabled = true
+                            Enabled = true,
+                            Claims = new List<Claim>
+                            {
+                                new Claim("Role", "admin"),
+                                new Claim("Fullname", "Robin van der Knaap")
+                            }
                         }
                     })
                     .UseInMemoryClients(new List<Client>{
@@ -90,28 +84,6 @@ namespace Hosts.AuthorizationServer
                     },
                     SigningCertificate = Get("Hosts.AuthorizationServer.Certificates.SkaeleAuth.pfx", "secret")
 
-            });
-
-            // Configure CORS (Cross Origin Resource Sharing)
-            app.UseCors(CorsOptions.AllowAll);
-
-            // Create new http configuration
-            var config = new HttpConfiguration();
-
-            // Configure webapi
-            WebApiConfig.Configure(config, container.GetInstance<IDependencyResolver>());
-
-            // Register web api
-            app.UseWebApi(config);
-        }
-
-        private Container SetupContainer()
-        {
-            return new Container(config =>
-            {
-                config.AddRegistry<WebApiRegistry>();
-                config.AddRegistry<ConfigurationRegistry>();
-                config.AddRegistry<IdentityServerRegistry>();
             });
         }
 

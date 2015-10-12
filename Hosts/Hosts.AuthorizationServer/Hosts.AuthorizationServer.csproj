@@ -137,17 +137,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\Infrastructure.ClientProvider\Infrastructure.ClientProvider.csproj">
-      <Project>{59779B7A-5E41-4C9C-829E-FDE888028CB6}</Project>
-      <Name>Infrastructure.ClientProvider</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.DependencyResolution\Infrastructure.DependencyResolution.csproj">
       <Project>{BB5C4897-77D7-48EF-B5CA-2E12414EEE3C}</Project>
       <Name>Infrastructure.DependencyResolution</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Web\Web.AuthorizationServer\Web.AuthorizationServer.csproj">
-      <Project>{B1136179-EA2C-4D14-B6FD-ABECE44D803A}</Project>
-      <Name>Web.AuthorizationServer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

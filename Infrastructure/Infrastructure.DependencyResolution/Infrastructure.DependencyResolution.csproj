@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdentityServerRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationRegistry.cs" />
     <Compile Include="WebApiRegistry.cs" />
@@ -64,14 +63,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.ClientProvider.AppSettings\Infrastructure.ClientProvider.AppSettings.csproj">
-      <Project>{233BD950-44B1-4DC3-9ACF-3F7F44E04E8C}</Project>
-      <Name>Infrastructure.ClientProvider.AppSettings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Infrastructure.ClientProvider\Infrastructure.ClientProvider.csproj">
-      <Project>{59779B7A-5E41-4C9C-829E-FDE888028CB6}</Project>
-      <Name>Infrastructure.ClientProvider</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Configuration.AppSettings\Infrastructure.Configuration.AppSettings.csproj">
       <Project>{1D03EB87-A894-49D4-B7C2-D5267B15AFAB}</Project>
       <Name>Infrastructure.Configuration.AppSettings</Name>
