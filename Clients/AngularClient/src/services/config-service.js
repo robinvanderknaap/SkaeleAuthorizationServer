@@ -1,17 +1,12 @@
  (function(){
 	
-	// Load environment dependent settings
-	angular.module('app').constant('environmentSettings', window.environmentSettings);
-	
 	angular.module('app').service('configService', ConfigService);
 
-	function ConfigService(environmentSettings){
+	function ConfigService(){
 		
-		// Settings which change per environment
-		this.environment = environmentSettings;
-				
-		// Settings which do not change per environemt
-		this.exampleLocalSetting = 5;
+		this.authServer = {
+			tokenEndPoint: 'http://localhost:50929/authenticate',
+			refreshTokenEndPoint: 'http://localhost:50929/authenticate/refresh-token'
+		}
 	}
-
 }());

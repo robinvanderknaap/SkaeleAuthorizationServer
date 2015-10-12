@@ -35,20 +35,19 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     
     <!-- build:customjs assets/lib.js -->
     <!-- inject:js -->    
     <script src="app.js"></script>    
-    <script src="environment-settings.js"></script>    
     <script src="routes.js"></script>    
+    <script src="services/authentication-service.js"></script>    
     <script src="services/config-service.js"></script>    
-    <script src="modules/about/aboutController.js"></script>    
-    <script src="modules/authentication/forgotpasswordController.js"></script>    
     <script src="modules/authentication/loginController.js"></script>    
-    <script src="modules/authentication/logoutController.js"></script>    
     <script src="modules/home/homeController.js"></script>    
+    <script src="modules/user/user.js"></script>    
     <!-- endinject -->
     <!-- endbuild -->
   </body>

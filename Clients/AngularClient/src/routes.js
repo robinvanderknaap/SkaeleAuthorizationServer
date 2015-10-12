@@ -17,63 +17,43 @@
 					},
 				}
 		  	})
-            .state('root.authentication', {
-                abstract: true,
-                url: "/authentication",
-                views: {
-                    'header@': {
-                        templateUrl: "",
-                        controller: ""
-                    }
-                }
-            })
-
-				.state('root.authentication.login', {
-				    url: "/login",
-				    views: {
-				        "main@": {
-				            templateUrl: "modules/authentication/login.html",
-				            controller: "loginController"
-				        }
-				    }
-				})
-
-				.state('root.authentication.logout', {
-				    url: "/logout",
-				    views: {
-				        "main@": {
-				            templateUrl: "modules/authentication/logout.html",
-				            controller: "logoutController"
-				        }
-				    }
-				})
-
-				.state('root.authentication.forgot-password', {
-				    url: "/wachtwoord-vergeten",
-				    views: {
-				        "main@": {
-				            templateUrl: "modules/authentication/forgotpassword.html",
-				            controller: "forgotpasswordController"
-				        }
-				    }
-				})
-		    .state('root.home', {
-		      	url: "/",
-			  	views:{
-					'main@':{
-						templateUrl: "modules/home/home.html",
-			  			controller: "HomeController"
+				.state('root.home', {
+					url: "/",
+					views:{
+						'main@':{
+							templateUrl: "modules/home/home.html",
+							controller: "HomeController"
+						}
 					}
-				}
-		    })
-		    .state('root.about', {
-		      url: "/about",
-			  views:{
-					'main@':{
-						templateUrl: "modules/about/about.html",
-			  			controller: "AboutController"
+				})
+				.state('root.user', {
+					url: "/",
+					views:{
+						'main@':{
+							templateUrl: "modules/user/user.html",
+							controller: "UserController"
+						}
 					}
-				}
-		    })
+				})
+				.state('root.authentication', {
+					abstract: true,
+					url: "/authentication",
+					views: {
+						'header@': {
+							templateUrl: "",
+							controller: ""
+						}
+					}
+				})
+	
+					.state('root.authentication.login', {
+						url: "/login",
+						views: {
+							"main@": {
+								templateUrl: "modules/authentication/login.html",
+								controller: "loginController"
+							}
+						}
+					})
 	}
 }());

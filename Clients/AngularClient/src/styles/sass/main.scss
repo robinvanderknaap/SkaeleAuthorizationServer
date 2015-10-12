@@ -4,61 +4,55 @@
 @import "../../bower_components/fontawesome/scss/font-awesome.scss";
 // endbower
 
-// Custom sass/css goes here 
-
 .about{
 	.logo{
 		width: 50%;
 		margin-bottom: 50px;
 	}
 }
-
-.form-signin {
-  
-    max-width: 600px;
-    padding: 19px 29px 29px;
-    margin: 100px auto 20px;
+.authenticationForm{
+    margin-top: 50px;
     background-color: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
-    
-    
-    .form-signin-heading,
-    .checkbox {
-        margin-bottom: 10px;
+    h2{
+        text-align: center;
+        margin: 10px 0 30px 0;
     }
-    
-    .form-signin-heading {
-        img{
-            width:30px;
-        }
-    }
-    
     .identity-providers{
-        text-align: right;
+        text-align: center;
         i{
-            color:#8CCA62;
-            margin-left:10px;
+            margin:0 10px 0 10px;
+        }
+        .facebook{
+            color: #3b5998;
+        }
+        .google{
+            color: #c32f10;
+        }
+        .twitter{
+            color: #00aced;
         }
     }
-    
-    
-    
-    input[type="text"],
-    input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
+    hr{
+        border-top:1px solid #e3e3e3;
+        margin:30px 0 30px 0;
     }
-    
-    .table-login thead > tr > th,
-    .table-login tbody > tr > th,
-    .table-login tfoot > tr > th,
-    .table-login thead > tr > td,
-    .table-login tbody > tr > td,
-    .table-login tfoot > tr > td {
-        padding: 5px;
-        border: 0px;
+    .hr-text{
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: -0.6em;
+        background-color: white;
+        text-align: center;
+    }
+    .or{
+        margin-left: -1.5em;
+        width: 3em;
+    }
+    .login-with{
+        margin-left: -3em;
+        width: 6em;
+    }
+    form{
+        margin-top:20px;
     }
 }

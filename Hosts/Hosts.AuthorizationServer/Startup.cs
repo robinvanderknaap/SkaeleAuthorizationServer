@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
 using IdentityServer3.Core.Configuration;
@@ -24,8 +26,6 @@ namespace Hosts.AuthorizationServer
             SetupLogger();
 
             var container = SetupContainer();
-
-            
             
 
             var clients = container.GetInstance<IClientProvider>().GetClients();
@@ -38,7 +38,7 @@ namespace Hosts.AuthorizationServer
                     {
                         new InMemoryUser
                         {
-                            Username = "robink",
+                            Username = "robin@skaele.nl",
                             Password = "secret",
                             Subject = "robink",
                             Enabled = true
@@ -58,10 +58,10 @@ namespace Hosts.AuthorizationServer
                         {
                             ClientName = "AngularClient",
                             ClientId = "AngularClient",
-                            AccessTokenType = AccessTokenType.Reference,
+                            AccessTokenType = AccessTokenType.Jwt,
                             Flow = Flows.ResourceOwner, // Machine->machine communication on behalf of user,
                             
-                            AllowedScopes = new List<string> { "Api", StandardScopes.OfflineAccess.Name }, // 'Scope' is the api (resource server) that we are protecting
+                            AllowedScopes = new List<string> { "Api" }, // 'Scope' is the api (resource server) that we are protecting
                             ClientSecrets = new List<Secret> { new Secret("secret".Sha256()) },
                             RefreshTokenUsage = TokenUsage.OneTimeOnly,
                             UpdateAccessTokenClaimsOnRefresh = true,
@@ -87,7 +87,8 @@ namespace Hosts.AuthorizationServer
                     AuthenticationOptions = new AuthenticationOptions
                     {
                         IdentityProviders = ConfigureIdentityProviders
-                    }
+                    },
+                    SigningCertificate = Get("Hosts.AuthorizationServer.Certificates.SkaeleAuth.pfx", "secret")
 
             });
 
@@ -142,6 +143,29 @@ namespace Hosts.AuthorizationServer
                 AppSecret = "..."
             };
             app.UseFacebookAuthentication(fb);
+        }
+
+        public static X509Certificate2 Get(string certificate, string password)
+        {
+            var assembly = typeof(Startup).Assembly;
+            using (var stream = assembly.GetManifestResourceStream(certificate))
+            {
+                return new X509Certificate2(ReadStream(stream), password);
+            }
+        }
+
+        private static byte[] ReadStream(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
         }
     }
 

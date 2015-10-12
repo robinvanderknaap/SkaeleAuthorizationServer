@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Web.Http;
 using System.Web.Http.Dependencies;
 using IdentityServer3.AccessTokenValidation;
 using Infrastructure.DependencyResolution;

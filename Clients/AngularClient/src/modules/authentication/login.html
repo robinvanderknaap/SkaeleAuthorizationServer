@@ -1,58 +1,42 @@
- 
-    
-
 <div class="row">
-
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		
-		 <div class="container">
-            <div class="form-signin">
-
-            <form name="loginForm" ng-submit="login(emailaddress, password, rememberme)">
-
-                <h2 class="form-signin-heading"><img src="images/skaele-logo.png">&nbsp;Inloggen</h2>
-
-                <table class="table table-login">
-                    <tr>
-                         <td class="identity-providers" colspan="2">
-                             <i class="fa fa-facebook-square fa-3x"></i>
-                             <i class="fa fa-google-plus-square fa-3x"></i>
-                             <i class="fa fa-twitter-square fa-3x"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                         <td colspan="2"><label for="emailaddress">E-mailadres</label></td>
-                    </tr>
-                    <tr>
-                         <td colspan="2"><input class="form-control" type="email"  ng-model="emailaddress"  /></td>
-                     </tr>
-                     <tr>
-                         <td colspan="2"><label for="Password">Wachtwoord</label></td>
-                     </tr>
-                    <tr>    
-                         <td colspan="2"><input class="form-control" type="password"  ng-model="password"/></td>
-                     </tr>
-                     <tr>
-                         <td>
-                            <input type="checkbox" ng-model="rememberme" > Hou mij ingelogd
-                         </td>
-                         <td class="text-right"><a ui-sref="root.authentication.forgot-password">Wachtwoord vergeten</a></td>
-                     </tr>
-                     <tr>
-                         <td colspan="2">
-                             <button type="submit" class="btn btn-success" />Inloggen</button>
-                         </td>
-                     </tr>
-                 </table>
-                 
-                 <div ng-show="message" class="alert alert-danger">
-                     {{message}}
-                 </div>
-                 
-            </form>
-            </div>
+    <div class="authenticationForm well well-lg col-xs-12 col-sm-8 col-md-6 col-lg-6 col-sm-offset-2 col-md-offset-3 col-lg-offset-3">
+        
+        <h2>Skaele</h2>
+        
+        <div style="position:relative">
+            <hr/>
+            <strong class="hr-text login-with">login with</strong>
         </div>
-		
-	</div>
-
+        
+        <div class="identity-providers">
+            <i class="fa fa-facebook-square fa-3x facebook"></i>
+            <i class="fa fa-google-plus-square fa-3x google"></i>
+            <i class="fa fa-twitter-square fa-3x twitter"></i>
+        </div>
+        
+        <div style="position:relative">
+            <hr/>
+            <strong class="hr-text or">or</strong>
+        </div>
+        
+        <form name="loginForm" ng-submit="login(email, password, rememberme)">
+            <div class="form-group form-group-lg">
+                <input type="email" class="form-control" id="email" ng-model="email" placeholder="Email" required>
+            </div>
+            <div class="form-group form-group-lg">
+                <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password" required>
+            </div>
+            <div class="checkbox"> 
+                <label>
+                    <input type="checkbox" value="">
+                    Remember me
+                </label>
+            </div>
+            <div class="form-group form-group-lg">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+            </div>
+        </form>
+    </div>
 </div>
+        
+
