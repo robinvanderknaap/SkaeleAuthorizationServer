@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Threading.Tasks;
+using Hosts.AuthorizationServer.Certificates;
+using Hosts.AuthorizationServer.Logging;
 using Hosts.AuthorizationServer.Stores;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
-using IdentityServer3.Core.Services.InMemory;
 using Microsoft.Owin.Security.Facebook;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
 using Owin;
 
 namespace Hosts.AuthorizationServer
@@ -19,57 +14,26 @@ namespace Hosts.AuthorizationServer
     {
         public void Configuration(IAppBuilder app)
         {
-            SetupLogger();
-
-            var identityServerServiceFactory = new IdentityServerServiceFactory
-            {
-                ClientStore = new Registration<IClientStore>(typeof(ClientStore))
-            }
-            .UseInMemoryUsers(new List<InMemoryUser>
-            {
-                new InMemoryUser
-                {
-                    Username = "robin@skaele.nl",
-                    Password = "secret",
-                    Subject = "robink",
-                    Enabled = true,
-                    Claims = new List<Claim>
-                    {
-                        new Claim("Role", "admin"),
-                        new Claim("Fullname", "Robin van der Knaap")
-                    }
-                }
-            })
-            .UseInMemoryScopes(new List<Scope> {new Scope {Name = "Api"}});
+            Logger.SetupLogger();
 
             app.UseIdentityServer(new IdentityServerOptions
             {
                 SiteName = "Skaele Authorization Server",
-                Factory = identityServerServiceFactory,
+                Factory = new IdentityServerServiceFactory
+                {
+                    ClientStore = new Registration<IClientStore>(typeof(ClientStore)),
+                    ScopeStore = new Registration<IScopeStore>(typeof(ScopeStore)),
+                    UserService = new Registration<IUserService>(typeof(UserService))
+                },
                 AuthenticationOptions = new AuthenticationOptions
                 {
                     IdentityProviders = ConfigureIdentityProviders
                 },
-                SigningCertificate = GetCertificate("Hosts.AuthorizationServer.Certificates.SkaeleAuth.pfx", "secret")
+                SigningCertificate = Certificate.Get("Hosts.AuthorizationServer.Certificates.SkaeleAuth.pfx", "secret")
             });
         }
 
-        private static void SetupLogger()
-        {
-            // IdentityServer uses LibLog, this means NLog is automatically detected.
-            // We just need to setup NLog and it will receive logmessages from IdentityServer
-
-            var loggingConfiguration = new LoggingConfiguration();
-
-            // Setup debugger target which logs to debugger, log statements will be visible in output window of Visual Studio
-            var debuggerTarget = new DebuggerTarget();
-            loggingConfiguration.AddTarget("DebuggerTarget", debuggerTarget);
-            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, debuggerTarget));
-
-            LogManager.Configuration = loggingConfiguration;
-
-            LogManager.ThrowExceptions = true;
-        }
+        
 
         private static void ConfigureIdentityProviders(IAppBuilder app, string signInAsType)
         {
@@ -84,27 +48,52 @@ namespace Hosts.AuthorizationServer
             app.UseFacebookAuthentication(fb);
         }
 
-        public static X509Certificate2 GetCertificate(string certificate, string password)
+        
+    }
+
+    public class UserService : IUserService
+    {
+        public Task PreAuthenticateAsync(PreAuthenticationContext context)
         {
-            var assembly = typeof(Startup).Assembly;
-            using (var stream = assembly.GetManifestResourceStream(certificate))
-            {
-                return new X509Certificate2(ReadStream(stream), password);
-            }
+            return Task.FromResult(0);
         }
 
-        private static byte[] ReadStream(Stream input)
+        public Task AuthenticateLocalAsync(LocalAuthenticationContext context)
         {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
+            if (context.UserName == "robin@skaele.nl" && context.Password == "secret")
             {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
+                context.AuthenticateResult = new AuthenticateResult("robink", "Robin van der Knaap");
             }
+
+            return Task.FromResult(0);
+        }
+
+        public Task AuthenticateExternalAsync(ExternalAuthenticationContext context)
+        {
+            context.AuthenticateResult = new AuthenticateResult("robink", "Robin van der Knaap");
+
+            return Task.FromResult(0);
+        }
+
+        public Task PostAuthenticateAsync(PostAuthenticationContext context)
+        {
+            return Task.FromResult(0);
+        }
+
+        public Task SignOutAsync(SignOutContext context)
+        {
+            return Task.FromResult(0);
+        }
+
+        public Task GetProfileDataAsync(ProfileDataRequestContext context)
+        {
+            return Task.FromResult(0);
+        }
+
+        public Task IsActiveAsync(IsActiveContext context)
+        {
+            context.IsActive = true;
+            return Task.FromResult(0);
         }
     }
 }

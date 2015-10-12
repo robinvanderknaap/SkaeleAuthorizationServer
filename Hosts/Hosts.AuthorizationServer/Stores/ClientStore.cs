@@ -47,6 +47,7 @@ namespace Hosts.AuthorizationServer.Stores
             }
 
         };
+
         public Task<Client> FindClientByIdAsync(string clientId)
         {
             return Task.FromResult(_clients.SingleOrDefault(x => x.ClientId == clientId));
